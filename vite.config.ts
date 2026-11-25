@@ -3,7 +3,11 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import { VitePWA } from 'vite-plugin-pwa'
 
+// https://vitejs.dev/config/
 export default defineConfig({
+  // base لازم تكون نفس اسم المستودع (Repository) بتاعك على GitHub
+  base: '/kun-ma-allah/',
+  
   plugins: [
     react(),
     VitePWA({
@@ -17,8 +21,8 @@ export default defineConfig({
         background_color: '#f0fdf4',
         display: 'standalone',
         orientation: 'portrait-primary',
-        scope: '/',
-        start_url: '/',
+        scope: '/kun-ma-allah/',
+        start_url: '/kun-ma-allah/',
         lang: 'ar',
         dir: 'rtl',
         icons: [
@@ -33,33 +37,6 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable'
-          }
-        ],
-        categories: ['lifestyle', 'education', 'utilities'],
-        shortcuts: [
-          {
-            name: 'أوقات الصلاة',
-            short_name: 'الصلاة',
-            url: '/prayer-times',
-            icons: [{ src: 'prayer-icon.png', sizes: '192x192' }]
-          },
-          {
-            name: 'القرآن الكريم',
-            short_name: 'القرآن',
-            url: '/quran',
-            icons: [{ src: 'quran-icon.png', sizes: '192x192' }]
-          },
-          {
-            name: 'الأذكار',
-            short_name: 'الأذكار',
-            url: '/azkar',
-            icons: [{ src: 'azkar-icon.png', sizes: '192x192' }]
-          },
-          {
-            name: 'القبلة',
-            short_name: 'القبلة',
-            url: '/qibla',
-            icons: [{ src: 'qibla-icon.png', sizes: '192x192' }]
           }
         ]
       },
@@ -83,15 +60,6 @@ export default defineConfig({
               expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 },
               cacheableResponse: { statuses: [0, 200] }
             }
-          },
-          {
-            urlPattern: /^https:\/\/.*\.mp3$/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'audio-cache',
-              expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 * 30 },
-              cacheableResponse: { statuses: [0, 200, 206] }
-            }
           }
         ]
       }
@@ -110,21 +78,14 @@ export default defineConfig({
       '@services': path.resolve(__dirname, './src/services')
     }
   },
-  server: { port: 3000, host: true },
   build: {
     target: 'es2020',
     minify: 'terser',
-    terserOptions: {
-      compress: { drop_console: true, drop_debugger: true }
-    },
     rollupOptions: {
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
           redux: ['@reduxjs/toolkit', 'react-redux'],
-          quran: ['@tensorflow/tfjs', '@tensorflow-models/universal-sentence-encoder'],
-          audio: ['howler', 'react-h5-audio-player'],
-          ui: ['framer-motion', 'lucide-react']
         }
       }
     }
