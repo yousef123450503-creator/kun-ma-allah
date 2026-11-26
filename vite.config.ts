@@ -3,9 +3,8 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import { VitePWA } from 'vite-plugin-pwa'
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  // جعل المسار نسبياً ليعمل في أي مكان على GitHub Pages
+  // تغيير المسار ليكون نسبياً ليقبل أي مكان يوضع فيه
   base: './',
   
   plugins: [
@@ -16,11 +15,13 @@ export default defineConfig({
       manifest: {
         name: 'كن مع الله - تطبيق إسلامي متكامل',
         short_name: 'كن مع الله',
-        description: 'تطبيق إسلامي شامل: أوقات الصلاة، القرآن، الأذكار، القبلة، التقويم الهجري، الزكاة، ومساعد ذكي',
+        description: 'تطبيق إسلامي شامل',
         theme_color: '#166534',
         background_color: '#f0fdf4',
         display: 'standalone',
         orientation: 'portrait-primary',
+        scope: './',
+        start_url: './',
         lang: 'ar',
         dir: 'rtl',
         icons: [
@@ -35,29 +36,6 @@ export default defineConfig({
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable'
-          }
-        ]
-      },
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,mp3}'],
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/api\.alquran\.cloud\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'quran-api-cache',
-              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 7 },
-              cacheableResponse: { statuses: [0, 200] }
-            }
-          },
-          {
-            urlPattern: /^https:\/\/api\.aladhan\.com\/.*/i,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'prayer-api-cache',
-              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 },
-              cacheableResponse: { statuses: [0, 200] }
-            }
           }
         ]
       }
@@ -76,7 +54,6 @@ export default defineConfig({
       '@services': path.resolve(__dirname, './src/services')
     }
   },
-  server: { port: 3000, host: true },
   build: {
     target: 'es2020',
     minify: 'terser',
