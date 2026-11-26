@@ -5,8 +5,8 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base لازم تكون نفس اسم المستودع (Repository) بتاعك على GitHub
-  base: '/kun-ma-allah/',
+  // جعل المسار نسبياً ليعمل في أي مكان على GitHub Pages
+  base: './',
   
   plugins: [
     react(),
@@ -21,8 +21,6 @@ export default defineConfig({
         background_color: '#f0fdf4',
         display: 'standalone',
         orientation: 'portrait-primary',
-        scope: '/kun-ma-allah/',
-        start_url: '/kun-ma-allah/',
         lang: 'ar',
         dir: 'rtl',
         icons: [
@@ -78,6 +76,7 @@ export default defineConfig({
       '@services': path.resolve(__dirname, './src/services')
     }
   },
+  server: { port: 3000, host: true },
   build: {
     target: 'es2020',
     minify: 'terser',
