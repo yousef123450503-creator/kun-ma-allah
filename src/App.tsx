@@ -1,17 +1,10 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { Layout } from './components/layout/Layout';
-import HomePage from './pages/Home';
-
 function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Navigate to="/home" replace />} />
-        <Route path="/home" element={<HomePage />} />
-        {/* الصفحات التانية هنضيفها هنا بالتدريج */}
-      </Routes>
-    </Layout>
-  );
+    <div style={{ padding: '50px', textAlign: 'center', fontSize: '24px', color: 'green' }}>
+      <h1>التطبيق يعمل بنجاح!</h1>
+      <p>إذا رأيت هذه الرسالة، فالمشكلة ليست في المسارات، بل في المكونات السابقة.</p>
+    </div>
+  )
 }
 
-export default App;
+export default App
